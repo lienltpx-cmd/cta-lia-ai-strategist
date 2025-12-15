@@ -1,0 +1,5 @@
+{
+  "name": "16.11 of CTA LIA AI Strategist v2.0",
+  "description": "An AI-powered application to analyze product information and blog content, generating a complete Call-to-Action (CTA) strategy with A/B testing variants, separating shared CSS from individual HTML blocks for easy integration.",
+  "requestFramePermissions": []
+}
