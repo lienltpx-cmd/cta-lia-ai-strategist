@@ -1,4 +1,4 @@
-import { AiFullStrategyResponse, Settings } from '../types';
+import { AiFullStrategyResponse, Settings } from '../shared/types';
 
 export const generateStrategy = async (
   settings: Settings,

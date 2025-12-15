@@ -1,12 +1,12 @@
 
 import React, { useState } from 'react';
-import { CtaVariant } from '../types';
-import { 
-  CodeIcon, 
-  EyeIcon, 
-  ClipboardIcon, 
-  CheckIcon, 
-  SunIcon, 
+import { CtaVariant } from '../shared/types';
+import {
+  CodeIcon,
+  EyeIcon,
+  ClipboardIcon,
+  CheckIcon,
+  SunIcon,
   MoonIcon,
   DevicePhoneMobileIcon,
   DeviceTabletIcon,
@@ -64,7 +64,7 @@ const CtaCard: React.FC<CtaCardProps> = ({ variant, sharedCss }) => {
       </body>
     </html>
   `;
-  
+
   const fullCodeForDisplay = `<!-- ====== SHARED CSS ====== -->
 <!-- Place this once on your page -->
 ${sharedCss}
@@ -97,36 +97,36 @@ ${variant.htmlBlock}`;
           </h4>
           <p className="text-xs text-gray-400 mt-1 line-clamp-1" title={variant.previewExplanation}>{variant.previewExplanation}</p>
         </div>
-        
+
         <div className="flex items-center gap-1 bg-base-100/50 p-1 rounded-lg border border-base-300/30">
           <button onClick={() => setViewMode('preview')} title="Chế độ Xem trước" className={`p-1.5 rounded-md transition-colors ${viewMode === 'preview' ? 'bg-brand-primary text-white shadow-sm' : 'hover:bg-base-300 text-gray-400'}`}>
             <EyeIcon className="w-4 h-4" />
           </button>
-           <button onClick={() => setViewMode('code')} title="Chế độ Code" className={`p-1.5 rounded-md transition-colors ${viewMode === 'code' ? 'bg-brand-primary text-white shadow-sm' : 'hover:bg-base-300 text-gray-400'}`}>
+          <button onClick={() => setViewMode('code')} title="Chế độ Code" className={`p-1.5 rounded-md transition-colors ${viewMode === 'code' ? 'bg-brand-primary text-white shadow-sm' : 'hover:bg-base-300 text-gray-400'}`}>
             <CodeIcon className="w-4 h-4" />
           </button>
 
           {viewMode === 'preview' && (
             <>
               <div className="w-px h-4 bg-base-300 mx-1"></div>
-              
-              <button 
-                title="Mobile View" 
-                onClick={() => setViewportSize('375px')} 
+
+              <button
+                title="Mobile View"
+                onClick={() => setViewportSize('375px')}
                 className={`p-1.5 rounded-md transition-colors ${viewportSize === '375px' ? 'bg-brand-secondary text-white shadow-sm' : 'hover:bg-base-300 text-gray-400'}`}
               >
                 <DevicePhoneMobileIcon className="w-4 h-4" />
               </button>
-              <button 
-                title="Tablet View" 
-                onClick={() => setViewportSize('768px')} 
+              <button
+                title="Tablet View"
+                onClick={() => setViewportSize('768px')}
                 className={`p-1.5 rounded-md transition-colors ${viewportSize === '768px' ? 'bg-brand-secondary text-white shadow-sm' : 'hover:bg-base-300 text-gray-400'}`}
               >
                 <DeviceTabletIcon className="w-4 h-4" />
               </button>
-               <button 
-                title="Desktop View" 
-                onClick={() => setViewportSize('100%')} 
+              <button
+                title="Desktop View"
+                onClick={() => setViewportSize('100%')}
                 className={`p-1.5 rounded-md transition-colors ${viewportSize === '100%' ? 'bg-brand-secondary text-white shadow-sm' : 'hover:bg-base-300 text-gray-400'}`}
               >
                 <ComputerDesktopIcon className="w-4 h-4" />
@@ -147,28 +147,28 @@ ${variant.htmlBlock}`;
 
       <div className="p-4 flex-grow min-h-[350px] bg-base-100 relative overflow-hidden flex justify-center items-start">
         {viewMode === 'preview' ? (
-          <div 
+          <div
             className="transition-all duration-300 ease-in-out border-x border-base-300 shadow-2xl bg-base-300/10"
-            style={{ 
-              width: viewportSize, 
+            style={{
+              width: viewportSize,
               height: '100%',
-              maxWidth: '100%' 
+              maxWidth: '100%'
             }}
           >
-             <div className="bg-base-300 text-[10px] text-gray-500 text-center py-1 border-b border-base-300 uppercase tracking-wider font-semibold">
-                {getViewportLabel(viewportSize)}
-             </div>
-             <iframe
-                srcDoc={iframeContent}
-                title={`Preview for Variant ${variant.variantName}`}
-                className="w-full h-[calc(100%-24px)] border-0 bg-transparent"
-                sandbox="allow-scripts allow-same-origin"
+            <div className="bg-base-300 text-[10px] text-gray-500 text-center py-1 border-b border-base-300 uppercase tracking-wider font-semibold">
+              {getViewportLabel(viewportSize)}
+            </div>
+            <iframe
+              srcDoc={iframeContent}
+              title={`Preview for Variant ${variant.variantName}`}
+              className="w-full h-[calc(100%-24px)] border-0 bg-transparent"
+              sandbox="allow-scripts allow-same-origin"
             />
           </div>
         ) : (
           <div className="absolute inset-0 w-full h-full">
-             <pre className="text-xs text-gray-300 bg-base-100 p-4 overflow-auto h-full w-full font-mono custom-scrollbar">
-                <code>{fullCodeForDisplay}</code>
+            <pre className="text-xs text-gray-300 bg-base-100 p-4 overflow-auto h-full w-full font-mono custom-scrollbar">
+              <code>{fullCodeForDisplay}</code>
             </pre>
             <button
               onClick={handleCopy}

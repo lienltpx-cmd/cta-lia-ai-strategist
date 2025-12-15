@@ -4,7 +4,7 @@ import SettingsPanel from './components/SettingsPanel';
 import ResultsDisplay from './components/ResultsDisplay';
 import UserGuideModal from './components/UserGuideModal';
 import { generateStrategy } from './services/geminiService';
-import { Settings, AiFullStrategyResponse } from './types';
+import { Settings, AiFullStrategyResponse } from './shared/types';
 import { useSessionStorage } from './hooks/useSessionStorage';
 import { QuestionMarkCircleIcon, UploadIcon, DocumentTextIcon, CheckIcon } from './components/icons';
 // @ts-ignore
@@ -41,7 +41,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isGuideOpen, setIsGuideOpen] = useState(false);
-  
+
   // File upload state
   const [isDragging, setIsDragging] = useState(false);
   const [fileName, setFileName] = useState<string | null>(null);
@@ -162,90 +162,90 @@ function App() {
       <header className="bg-base-200/50 backdrop-blur-sm p-4 border-b border-base-300 sticky top-0 z-10">
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-2xl font-bold text-white">LIA - AI CTA STRATEGIST</h1>
-           <button 
+          <button
             onClick={() => setIsGuideOpen(true)}
             className="text-gray-400 hover:text-white transition-colors"
             aria-label="Open user guide"
-           >
-              <QuestionMarkCircleIcon className="w-7 h-7" />
-           </button>
+          >
+            <QuestionMarkCircleIcon className="w-7 h-7" />
+          </button>
         </div>
       </header>
 
       <main className="container mx-auto p-4 md:p-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          
+
           <div className="space-y-6">
             <SettingsPanel settings={settings} setSettings={setSettings} />
-            
+
             <div className="space-y-4">
               <h2 className="text-xl font-semibold flex items-center gap-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
-                  2. Cung cấp Nội dung Blog
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                2. Cung cấp Nội dung Blog
               </h2>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 h-[400px]">
                 {/* Column 1: Direct Paste */}
                 <div className="flex flex-col h-full bg-base-200 rounded-lg border border-base-300 overflow-hidden">
-                    <div className="p-3 bg-base-300/50 border-b border-base-300 flex justify-between items-center">
-                        <span className="text-sm font-medium text-white flex items-center gap-2">
-                             <DocumentTextIcon className="w-4 h-4 text-brand-light" />
-                            Nhập trực tiếp
-                        </span>
-                        <span className="text-xs text-gray-500">{blogContent.length.toLocaleString()} ký tự</span>
-                    </div>
-                    <textarea
-                        id="blogContent"
-                        value={blogContent}
-                        onChange={handleTextChange}
-                        placeholder="Dán nội dung bài viết của bạn vào đây..."
-                        className="flex-1 w-full bg-base-200 p-3 resize-none focus:outline-none focus:bg-base-300/20 transition-colors text-sm leading-relaxed custom-scrollbar"
-                    />
+                  <div className="p-3 bg-base-300/50 border-b border-base-300 flex justify-between items-center">
+                    <span className="text-sm font-medium text-white flex items-center gap-2">
+                      <DocumentTextIcon className="w-4 h-4 text-brand-light" />
+                      Nhập trực tiếp
+                    </span>
+                    <span className="text-xs text-gray-500">{blogContent.length.toLocaleString()} ký tự</span>
+                  </div>
+                  <textarea
+                    id="blogContent"
+                    value={blogContent}
+                    onChange={handleTextChange}
+                    placeholder="Dán nội dung bài viết của bạn vào đây..."
+                    className="flex-1 w-full bg-base-200 p-3 resize-none focus:outline-none focus:bg-base-300/20 transition-colors text-sm leading-relaxed custom-scrollbar"
+                  />
                 </div>
 
                 {/* Column 2: Upload File */}
-                <div 
-                    onClick={triggerFileUpload}
-                    onDragOver={handleDragOver}
-                    onDragLeave={handleDragLeave}
-                    onDrop={handleDrop}
-                    className={`flex flex-col items-center justify-center h-full rounded-lg border-2 border-dashed transition-all duration-300 cursor-pointer relative overflow-hidden group
-                        ${isDragging 
-                            ? 'border-brand-primary bg-brand-primary/10' 
-                            : 'border-base-300 bg-base-200/50 hover:border-brand-light/50 hover:bg-base-200'
-                        }
+                <div
+                  onClick={triggerFileUpload}
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  className={`flex flex-col items-center justify-center h-full rounded-lg border-2 border-dashed transition-all duration-300 cursor-pointer relative overflow-hidden group
+                        ${isDragging
+                      ? 'border-brand-primary bg-brand-primary/10'
+                      : 'border-base-300 bg-base-200/50 hover:border-brand-light/50 hover:bg-base-200'
+                    }
                     `}
                 >
-                     <input 
-                        type="file" 
-                        ref={fileInputRef} 
-                        className="hidden" 
-                        accept=".docx,.txt,.md"
-                        onChange={handleFileChange}
-                    />
-                    
-                    <div className="z-10 flex flex-col items-center text-center p-6 space-y-3">
-                         <div className={`p-4 rounded-full transition-transform duration-300 ${isDragging ? 'scale-110 bg-brand-primary/20' : 'bg-base-300 group-hover:scale-110'}`}>
-                            {fileName ? (
-                                <CheckIcon className="w-8 h-8 text-green-400" />
-                            ) : (
-                                <UploadIcon className="w-8 h-8 text-brand-light" />
-                            )}
-                         </div>
-                         
-                         {fileName ? (
-                            <div className="space-y-1">
-                                <p className="text-green-400 font-semibold">Đã tải lên thành công!</p>
-                                <p className="text-sm text-gray-300 font-medium break-all px-2">{fileName}</p>
-                                <p className="text-xs text-gray-500 mt-2">Click để thay đổi file khác</p>
-                            </div>
-                         ) : (
-                            <div className="space-y-1">
-                                <p className="text-white font-medium">Click hoặc Kéo thả file vào đây</p>
-                                <p className="text-xs text-gray-400">Hỗ trợ: Word (.docx), Markdown (.md), Text (.txt)</p>
-                            </div>
-                         )}
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    className="hidden"
+                    accept=".docx,.txt,.md"
+                    onChange={handleFileChange}
+                  />
+
+                  <div className="z-10 flex flex-col items-center text-center p-6 space-y-3">
+                    <div className={`p-4 rounded-full transition-transform duration-300 ${isDragging ? 'scale-110 bg-brand-primary/20' : 'bg-base-300 group-hover:scale-110'}`}>
+                      {fileName ? (
+                        <CheckIcon className="w-8 h-8 text-green-400" />
+                      ) : (
+                        <UploadIcon className="w-8 h-8 text-brand-light" />
+                      )}
                     </div>
+
+                    {fileName ? (
+                      <div className="space-y-1">
+                        <p className="text-green-400 font-semibold">Đã tải lên thành công!</p>
+                        <p className="text-sm text-gray-300 font-medium break-all px-2">{fileName}</p>
+                        <p className="text-xs text-gray-500 mt-2">Click để thay đổi file khác</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-1">
+                        <p className="text-white font-medium">Click hoặc Kéo thả file vào đây</p>
+                        <p className="text-xs text-gray-400">Hỗ trợ: Word (.docx), Markdown (.md), Text (.txt)</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -271,9 +271,9 @@ function App() {
           </div>
 
           <div className="bg-base-200/50 p-4 rounded-lg border border-base-300 min-h-[500px]">
-             <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
-               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
-               3. Kết quả & Chiến lược từ AI
+            <h2 className="text-xl font-semibold flex items-center gap-2 mb-4">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" /></svg>
+              3. Kết quả & Chiến lược từ AI
             </h2>
             {isLoading && (
               <div className="flex flex-col items-center justify-center h-full text-center">
@@ -293,7 +293,7 @@ function App() {
               </div>
             )}
             {!isLoading && !aiResponse && !error && (
-               <div className="flex flex-col items-center justify-center h-full text-center text-gray-400">
+              <div className="flex flex-col items-center justify-center h-full text-center text-gray-400">
                 <p className="text-lg">Kết quả phân tích sẽ xuất hiện ở đây.</p>
                 <p className="text-sm">Hãy điền thông tin và nhấn "Tạo chiến lược CTA" để bắt đầu.</p>
               </div>

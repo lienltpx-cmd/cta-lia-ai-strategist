@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AiFullStrategyResponse } from '../types';
+import { AiFullStrategyResponse } from '../shared/types';
 import AbTestCard from './AbTestCard';
 import { ClipboardIcon, CheckIcon } from './icons';
 
@@ -35,7 +35,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ response }) => {
           ))}
         </div>
       </section>
-      
+
       <section className="bg-base-200 p-6 rounded-lg border border-base-300">
         <h2 className="text-2xl font-bold mb-4 text-white">Rủi ro & Đề xuất</h2>
         <p className="text-gray-300 whitespace-pre-wrap">{response.risksAndRecommendations}</p>
@@ -43,16 +43,16 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ response }) => {
 
       <section>
         <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-4">
-            <h2 className="text-2xl font-bold text-white">Cặp A/B Test & Vị trí đặt</h2>
-            <div className="relative">
-              <button
-                onClick={handleCopyCss}
-                className="flex items-center gap-2 bg-base-300 hover:bg-base-300/80 text-white font-semibold py-2 px-4 rounded-md transition duration-200 text-sm"
-              >
-                {copiedCss ? <CheckIcon className="w-4 h-4 text-green-400"/> : <ClipboardIcon className="w-4 h-4" />}
-                {copiedCss ? 'Copied CSS!' : 'Copy Shared CSS'}
-              </button>
-            </div>
+          <h2 className="text-2xl font-bold text-white">Cặp A/B Test & Vị trí đặt</h2>
+          <div className="relative">
+            <button
+              onClick={handleCopyCss}
+              className="flex items-center gap-2 bg-base-300 hover:bg-base-300/80 text-white font-semibold py-2 px-4 rounded-md transition duration-200 text-sm"
+            >
+              {copiedCss ? <CheckIcon className="w-4 h-4 text-green-400" /> : <ClipboardIcon className="w-4 h-4" />}
+              {copiedCss ? 'Copied CSS!' : 'Copy Shared CSS'}
+            </button>
+          </div>
         </div>
         <div className="space-y-6">
           {response.abTestPairs.map((pair, index) => (

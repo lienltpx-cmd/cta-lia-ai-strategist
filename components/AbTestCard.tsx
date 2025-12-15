@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { AbTestPair } from '../types';
+import { AbTestPair } from '../shared/types';
 import CtaCard from './CtaCard';
 
 interface AbTestCardProps {
